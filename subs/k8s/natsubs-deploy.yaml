@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nats-sub-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nats-sub
+  template:
+    metadata:
+      labels:
+        app: nats-sub
+      name: nats-sub
+    spec:
+      containers:
+        - name: nats-sub
+          image: localhost:32000/natsubs
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "50Mi"
+          args:
+            - "-s"
+            - "nats://my-nats:4222"
+            - msg.test
+
