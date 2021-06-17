@@ -13,7 +13,7 @@ CMD [ "nats-sub" ]
 ## Deploy
 ##
 
-FROM gcr.io/distroless/base-debian10
+FROM alpine
 
 WORKDIR /
 
