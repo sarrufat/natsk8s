@@ -9,3 +9,17 @@ RUN go build -o /nats-sub
 
 
 CMD [ "nats-sub" ]
+##
+## Deploy
+##
+
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /
+
+COPY --from=build /nats-sub /nats-sub
+
+
+USER nonroot:nonroot
+
+ENTRYPOINT ["/nats-sub"]

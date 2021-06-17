@@ -21,7 +21,7 @@ spec:
               cpu: "100m"
               memory: "50Mi"
           args:
-            - nats-sub
+            - "/nats-sub"
             - "-s"
             - "nats://my-nats:4222"
             - msg.test
