@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+
+metadata:
+  name: nats-pub-cron
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: nats-pub
+      name: nats-pub
+    spec:
+      template:
+        spec:
+          containers:
+            - name: nats-pub
+              image: localhost:32000/natpub
+              resources:
+                limits:
+                  cpu: "100m"
+                  memory: "50Mi"
+              command: [ "/nats-pub" ]
+              args: [ "-s" , "nats://my-nats:4222",  "msg.test", "message" ]
