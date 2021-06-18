@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nats-sub-java-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nats-sub-java
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nats-sub-java
+      name: nats-su-java
+    spec:
+      containers:
+        - name: nats-sub-java
+          image: localhost:32000/natsubs_sp
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "150Mi"
