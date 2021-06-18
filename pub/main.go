@@ -15,6 +15,7 @@ package main
 
 import (
 	"flag"
+	"github.com/sarrufat/natsk8s/pub/rand"
 	"log"
 	"os"
 
@@ -44,6 +45,8 @@ func main() {
 	var tlsCACert = flag.String("tlscacert", "", "CA certificate to verify peer against")
 	var reply = flag.String("reply", "", "Sets a specific reply subject")
 	var showHelp = flag.Bool("h", false, "Show help message")
+	var continousSend = flag.Bool("c", false, "Continuous send generated message")
+	var numSessages = flag.Int("n", 100, "Number of messages on continuous send")
 
 	log.SetFlags(0)
 	flag.Usage = usage
@@ -96,8 +99,17 @@ func main() {
 	}
 	defer nc.Close()
 
-	subj, msg := args[0], []byte(args[1])
+	if !*continousSend {
+		subj, msg := args[0], []byte(args[1])
 
+		sendMessage(reply, nc, subj, msg)
+	} else {
+		generateMessages(nc, *numSessages, args[0])
+	}
+
+}
+
+func sendMessage(reply *string, nc *nats.Conn, subj string, msg []byte) {
 	if reply != nil && *reply != "" {
 		nc.PublishRequest(subj, *reply, msg)
 	} else {
@@ -105,10 +117,17 @@ func main() {
 	}
 
 	nc.Flush()
-
 	if err := nc.LastError(); err != nil {
 		log.Fatal(err)
 	} else {
 		log.Printf("Published [%s] : '%s'\n", subj, msg)
+	}
+}
+
+func generateMessages(nc *nats.Conn, i int, subj string) {
+	rply := ""
+	for cnt := 0; cnt < i; cnt++ {
+		msg := rand.String(128)
+		sendMessage(&rply, nc, subj, []byte(msg))
 	}
 }
