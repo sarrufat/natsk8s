@@ -24,4 +24,4 @@ spec:
                   memory: "50Mi"
               command: [ "/nats-pub" ]
               args: [ "-s" , "nats://my-nats:4222",  "-c",  "msg.test" ]
-      backoffLimit: 6
+      backoffLimit: 1
