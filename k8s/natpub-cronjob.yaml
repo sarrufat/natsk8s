@@ -13,7 +13,7 @@ spec:
     spec:
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
             - name: nats-pub
               image: localhost:32000/natpub
@@ -23,4 +23,4 @@ spec:
                   memory: "50Mi"
               command: [ "/nats-pub" ]
               args: [ "-s" , "nats://my-nats:4222",  "-c=true",  "msg.test" ]
-      backoffLimit: 1
+      backoffLimit: 6
