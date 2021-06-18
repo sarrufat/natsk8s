@@ -17,6 +17,7 @@ spec:
           containers:
             - name: nats-pub
               image: localhost:32000/natpub
+              imagePullPolicy: Always
               resources:
                 limits:
                   cpu: "100m"
