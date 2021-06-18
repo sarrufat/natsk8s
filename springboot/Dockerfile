@@ -2,7 +2,7 @@ FROM maven:3-openjdk-8 AS BUILD
 
 COPY ./ ./
 
-RUN mvn package
+RUN mvn install
 
 FROM openjdk:8-jdk-alpine
 ARG JAR_FILE=target/*.jar
