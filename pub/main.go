@@ -57,7 +57,7 @@ func main() {
 	}
 
 	args := flag.Args()
-	if len(args) != 2 {
+	if len(args) < 1 {
 		showUsageAndExit(1)
 	}
 
