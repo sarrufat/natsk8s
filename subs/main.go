@@ -38,7 +38,7 @@ func showUsageAndExit(exitcode int) {
 }
 
 func printMsg(m *nats.Msg, i int) {
-	log.Printf("[#%d] Received on [%s]: '%s'", i, m.Subject, string(m.Data))
+	log.Printf("[#%d] Received on [%s]: len = %d", i, m.Subject, len(m.Data))
 }
 
 func main() {
