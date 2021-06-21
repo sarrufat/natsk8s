@@ -18,8 +18,11 @@ spec:
         - name: nats-sub
           image: localhost:32000/natsubs
           resources:
-            limits:
+            requests:
               cpu: "100m"
               memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
           command: ["/nats-sub"]
           args: [ "-s" , "nats://my-nats:4222", "msg.test"]
