@@ -35,6 +35,8 @@ func (mp *MessageProducer) ServeHTTP(writer http.ResponseWriter, request *http.R
 			http.Error(writer, "Unable to marshal json", http.StatusInternalServerError)
 			mp.logger.Print(err)
 		}
+		d, _ := json.Marshal(natsTest)
+		mp.logger.Print(string(d))
 		mp.cli.Do(natsTest.Prepare())
 	}
 }
