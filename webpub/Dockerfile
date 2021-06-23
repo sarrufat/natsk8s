@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . ./
 
-RUN GIT_COMMIT=$(git rev-list -1 HEAD)
-
 RUN go get github.com/sarrufat/natsk8s/pub/rand
 RUN go get github.com/sarrufat/natsk8s/webpub/service
 RUN go build -o /webpub -ldflags "-X main.version=$VERSION"
