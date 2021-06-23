@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+var (
+	version string
+	build   string
+)
+
 func mainApp() *cli.App {
 	return &cli.App{
 		Flags: []cli.Flag{
@@ -48,6 +53,7 @@ func mainAction(context *cli.Context) error {
 
 func startServer(server http.Server) {
 	go func() {
+		server.ErrorLog.Println("version: ", version)
 		server.ErrorLog.Println("Starting server on ", server.Addr)
 		err := server.ListenAndServe()
 		if err != nil {
