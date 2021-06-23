@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nats-web-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nats-web
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nats-web
+      name: nats-web
+    spec:
+      containers:
+        - name: nats-web
+          image: localhost:32000/webpub
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+          command: ["/webpub"]
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+
