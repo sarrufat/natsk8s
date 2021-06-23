@@ -50,6 +50,8 @@ func (mp *MessageProducer) ServeHTTP(writer http.ResponseWriter, request *http.R
 			Message: outcome,
 		}
 		resp.ToJSON(writer)
+	} else {
+		writer.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }
 
