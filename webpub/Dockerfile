@@ -5,6 +5,7 @@ WORKDIR /app
 COPY . ./
 
 RUN go get github.com/sarrufat/natsk8s/pub/rand
+RUN go get github.com/sarrufat/natsk8s/webpub/service
 RUN go build -o /webpub
 
 
