@@ -1,5 +1,7 @@
 
+
+
 build-docker:
-	GIT_COMMIT=$(git rev-list -1 HEAD)
-	docker build --build-arg VERSION="$GIT_COMMIT" -t localhost:32000/webpub .
+	GIT_COMMIT:=$(git rev-list -1 HEAD)
+	docker build --build-arg VERSION=${GIT_COMMIT} -t localhost:32000/webpub .
 	docker push localhost:32000/webpub
