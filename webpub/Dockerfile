@@ -3,10 +3,10 @@ FROM golang:1.16-alpine AS build
 WORKDIR /app
 
 COPY . ./
-
+ARG GIT_VERSION
 RUN go get github.com/sarrufat/natsk8s/pub/rand
 RUN go get github.com/sarrufat/natsk8s/webpub/service
-RUN go build -o /webpub -ldflags "-X main.version=$VERSION"
+RUN go build -o /webpub -ldflags "-X main.version=$GIT_VERSION"
 
 
 CMD [ "webpub" ]
