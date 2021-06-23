@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: nats-web
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
