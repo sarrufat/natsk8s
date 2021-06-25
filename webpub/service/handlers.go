@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/nats-io/nats.go"
 	"github.com/sarrufat/natsk8s/pub/rand"
 	"io"
@@ -34,25 +35,20 @@ func (nr *NatsTestResponse) ToJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(nr)
 }
-func (mp *MessageProducer) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 
-	mp.logger.Println("ServeHTTP ", request.Method)
-	if request.Method == http.MethodPost {
-		natsTest := &NatsTestRequest{}
-		err := natsTest.FromJSON(request.Body)
-		if err != nil {
-			http.Error(writer, "Unable to marshal json", http.StatusInternalServerError)
-			mp.logger.Print(err)
-		}
-		outcome := mp.cli.Do(natsTest.Prepare())
-		resp := &NatsTestResponse{
-			Status:  http.StatusOK,
-			Message: outcome,
-		}
-		resp.ToJSON(writer)
-	} else {
-		writer.WriteHeader(http.StatusMethodNotAllowed)
+func (mp *MessageProducer) doHttp(c *gin.Context) {
+	natsTest := &NatsTestRequest{}
+	err := c.ShouldBind(natsTest)
+	if err != nil {
+		c.String(http.StatusBadRequest, "Unable to marshal json")
+		mp.logger.Print(err)
 	}
+	outcome := mp.cli.Do(natsTest.Prepare())
+	resp := &NatsTestResponse{
+		Status:  http.StatusOK,
+		Message: outcome,
+	}
+	c.JSONP(http.StatusOK, resp)
 }
 
 func (nt *NatsTestRequest) Prepare() NatsAction {
