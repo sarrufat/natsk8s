@@ -36,7 +36,7 @@ func (nr *NatsTestResponse) ToJSON(w io.Writer) error {
 	return enc.Encode(nr)
 }
 
-func (mp *MessageProducer) doHttp(c *gin.Context) {
+func (mp *MessageProducer) DoAction(c *gin.Context) {
 	natsTest := &NatsTestRequest{}
 	err := c.ShouldBind(natsTest)
 	if err != nil {
