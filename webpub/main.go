@@ -35,7 +35,7 @@ func mainAction(context *cli.Context) error {
 	r := gin.Default()
 	logger := log.New(os.Stdout, "webpub ", log.LstdFlags)
 	mp := service.NewMessageProducer(logger, context.String("URL"))
-	r.PUT("/", mp.DoAction)
+	r.PUT("/nats", mp.DoAction)
 	// startServer(server)
 	r.Run(":9090")
 	return nil
